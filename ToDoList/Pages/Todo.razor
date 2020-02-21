@@ -7,15 +7,8 @@
     {
     <li>
         <input type="checkbox" @bind="todo.IsDone" />
-        @if (todo.IsDone)
-        {
-            <input @bind="todo.Title" disabled />
-        }
-        else
-        {
-            <input @bind="todo.Title" />
-            <button @onclick="@(e => RemoveTodo(todo))">x</button>
-        }
+        <input @bind="todo.Title" disabled="@todo.IsDone" />
+        <button @onclick="@(e => RemoveTodo(todo))" disabled="@todo.IsDone" >x</button>
     </li>
     }
 </ul>

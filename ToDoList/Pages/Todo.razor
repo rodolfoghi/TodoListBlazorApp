@@ -1,0 +1,52 @@
+﻿@page "/todo"
+
+<h1>Todo (@todos.Count(todo => !todo.IsDone))</h1>
+
+<ul>
+    @foreach (var todo in todos)
+    {
+    <li>
+        <input type="checkbox" @bind="todo.IsDone" />
+        @if (todo.IsDone)
+        {
+            <input @bind="todo.Title" disabled />
+        }
+        else
+        {
+            <input @bind="todo.Title" />
+            <button @onclick="@(e => RemoveTodo(todo))">x</button>
+        }
+    </li>
+    }
+</ul>
+
+<input placeholder="Something todo" @bind="newTodo"/>
+<button @onclick="AddTodo">Add todo</button>
+
+
+@code {
+    private IList<TodoItem> todos = new List<TodoItem>()
+    {
+        new TodoItem { Title = "Learn TypeScript" },
+        new TodoItem { Title = "Learn Blazor" },
+        new TodoItem { Title = "Learn DotNetCore" },
+        new TodoItem { Title = "Learn TDD" },
+    };
+
+    private string newTodo;
+
+
+    private void AddTodo()
+    {
+        if (!string.IsNullOrEmpty(newTodo))
+        {
+            todos.Add(new TodoItem { Title = newTodo });
+            newTodo = string.Empty;
+        }
+    }
+
+    private void RemoveTodo(TodoItem todo)
+    {
+        todos.Remove(todo);
+    }
+}
